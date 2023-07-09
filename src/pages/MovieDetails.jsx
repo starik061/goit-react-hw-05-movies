@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 // import PropTypes from 'prop-types'
 
 import { fetchMovieDetails } from 'moviesAPI/fetchMoviesData';
 
 const MovieDetails = props => {
   const { movieId } = useParams();
+
   const [movieDetails, setMovieDetails] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       const movieData = await fetchMovieDetails(movieId);
@@ -34,17 +36,29 @@ const MovieDetails = props => {
     ratingData = ratingData.toFixed(1);
     return `${ratingData * 10}%`;
   };
+  const handleGoBack = () => {
+    console.log('test go back');
+  };
+
   if (movieDetails) {
     return (
       <>
-        <button>Go back</button>
+        <button onClick={handleGoBack}>Go back</button>
         <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt="" />
         <h2>{`${title}(${getReleaseYear(release_date)})`}</h2>
         <p>User Score: {getRating(vote_average)}</p>
         <h3>Overview</h3>
         <p>{overview}</p>
         <h4>{getGenres(genres)}</h4>
-        <p></p>
+        <hr />
+        <p>Additional information</p>
+        <ul>
+          <Link to={`/movies/${movieId}/cast`}>Cast</Link>
+
+          <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+        </ul>
+        <hr />
+        <Outlet />
       </>
     );
   }

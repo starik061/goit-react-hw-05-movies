@@ -14,6 +14,7 @@ const MovieDetails = props => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const poster_path = movieDetails?.poster_path || '';

@@ -31,6 +31,7 @@ const Reviews = () => {
       </div>
     );
   }
+  return <div>We don't have any reviews for this film</div>;
 };
 
 export default Reviews;

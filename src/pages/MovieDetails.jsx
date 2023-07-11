@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 // import PropTypes from 'prop-types'
 
 import { fetchMovieDetails } from 'moviesAPI/fetchMoviesData';
 
 const MovieDetails = props => {
   const { movieId } = useParams();
+
+  const navigate = useNavigate();
 
   const [movieDetails, setMovieDetails] = useState(null);
 
@@ -37,7 +39,7 @@ const MovieDetails = props => {
     return `${ratingData * 10}%`;
   };
   const handleGoBack = () => {
-    console.log('test go back');
+    navigate(-1);
   };
 
   if (movieDetails) {

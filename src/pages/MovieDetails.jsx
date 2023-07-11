@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 // import PropTypes from 'prop-types'
 
@@ -60,7 +60,9 @@ const MovieDetails = props => {
           <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
         </ul>
         <hr />
-        <Outlet />
+        <Suspense fallback={<div>Loading page...</div>}>
+          <Outlet />
+        </Suspense>
       </>
     );
   }

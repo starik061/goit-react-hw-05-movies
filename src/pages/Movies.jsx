@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 // import PropTypes from 'prop-types';
 import SearchMovieForm from '../components/SearchMovieForm/SearchMovieForm';
 import { fetchMovieByQuery } from 'moviesAPI/fetchMoviesData';
-import FindMovies from 'components/FindMovies/FindMovies';
+
+const FindMovies = lazy(() => import('components/FindMovies/FindMovies'));
 
 const Movies = props => {
   const [findMovies, setFindMovies] = useState([]);
@@ -24,7 +25,11 @@ const Movies = props => {
   return (
     <>
       <SearchMovieForm searchMovie={searchMovie} />
-      {findMovies.length > 0 && <FindMovies movies={findMovies} />}
+      {findMovies.length > 0 && (
+        <Suspense fallback={<div>Loading ...</div>}>
+          <FindMovies movies={findMovies} />
+        </Suspense>
+      )}
       {findMovies.length === 0 && !isFound && <div>Not found</div>}
     </>
   );
